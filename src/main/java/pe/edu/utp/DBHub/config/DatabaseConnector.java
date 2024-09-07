@@ -10,9 +10,14 @@ public interface DatabaseConnector {
     /**
      * Establishes a connection to the database.
      *
+     * @param server the server address.
+     * @param port the port number.
+     * @param database the database name.
+     * @param user the username.
+     * @param password the password.
      * @return true if the connection was successful, false otherwise.
      */
-    public boolean connect();
+    public boolean connect(String server, String port, String database, String user, String password);
 
     /**
      * Closes the connection to the database.

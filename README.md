@@ -6,6 +6,7 @@
 # Programadores
 
 - [Juan Bladimir Romero Collazos](https://github.com/IngSystemCix)
+- [Jaime Adolfo López Scipión](https://github.com/Uskrat)
 
 ## Bases de Datos Soportadas
 
