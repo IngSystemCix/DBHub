@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * Provides methods to connect, disconnect, check connection status,
  * and handle error messages specific to MariaDB.
  */
-public class MariDBConnector implements DatabaseConnector {
+public class MariaDBConnector implements DatabaseConnector {
     private Connection connection;
     private String errorMessage;
 
