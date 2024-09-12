@@ -10,7 +10,7 @@
 
   <name>DBHub</name>
   <description>DBHub es una biblioteca Java diseñada para simplificar y unificar la conexión a múltiples bases de datos. Con una arquitectura modular, DBHub ofrece una interfaz común que permite configurar y gestionar conexiones con diferentes sistemas de bases de datos como MySQL, PostgreSQL, Oracle, entre otros, de manera eficiente y sin complicaciones.</description>
-  <url></url>
+  <url>https://github.com/IngSystemCix/DBHub</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,7 +31,19 @@
       <organization>UTP</organization>
       <organizationUrl>https://www.utp.edu.pe/</organizationUrl>
     </developer>
+    <developer>
+      <name>Jaime Adolfo López Scipión</name>
+
+      <organization>UTP</organization>
+      <organizationUrl>https://www.utp.edu.pe/</organizationUrl>
+    </developer>
   </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/IngSystemCix/DBHub.git</connection>
+    <developerConnection>scm:git:ssh://github.com:IngSystemCix/DBHub.git</developerConnection>
+    <url>https://github.com/IngSystemCix/DBHub/tree/main</url>
+  </scm>
 
   <dependencyManagement>
     <dependencies>
