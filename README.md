@@ -32,7 +32,17 @@ DBHub es compatible con los siguientes sistemas de bases de datos:
 ### Ejemplo de Conexión
 
 ```java
+package pe.edu.utp.DBHub;
 
+import pe.edu.utp.DBHub.db.*;
+
+public class app {
+    public static void main(String[] args) {
+        SQLServerConnector h2Connector = new SQLServerConnector();
+        h2Connector.connect("localhost", "1433", "yourDatabase", "yourUser", "yourPassword");
+        h2Connector.disconnect();
+    }
+}
 ```
 
 ### Documentación
@@ -42,7 +52,7 @@ Para obtener más información sobre cómo utilizar DBHub, consulta la documenta
 ## Notas Importantes
 
 > [!TIP]
-> El archivo `.env` debera ser creado en la ruta 'src/main/resources' de tu proyecto Java. Este archivo debe contener las credenciales y configuraciones de las bases de datos que desees utilizar en tu aplicación.
+> El archivo `.env` debera ser creado en la ruta `src/main/resources` de tu proyecto Java. Este archivo debe contener las credenciales y configuraciones de las bases de datos que desees utilizar en tu aplicación.
 
 > [!NOTE]  
 > DBHub ha sido diseñada para facilitar la integración con diferentes motores de bases de datos, como MySQL, PostgreSQL, SQLite, entre otros. La simplicidad y flexibilidad de esta biblioteca te permiten enfocarte en la lógica de tu aplicación sin preocuparte por los detalles de implementación de las conexiones a bases de datos.
