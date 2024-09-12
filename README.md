@@ -38,9 +38,9 @@ import pe.edu.utp.DBHub.db.*;
 
 public class app {
     public static void main(String[] args) {
-        SQLServerConnector h2Connector = new SQLServerConnector();
-        h2Connector.connect("localhost", "1433", "yourDatabase", "yourUser", "yourPassword");
-        h2Connector.disconnect();
+        SQLServerConnector sqlServerConnector = new SQLServerConnector();
+        sqlServerConnector.connect("localhost", "1433", "yourDatabase", "yourUser", "yourPassword");
+        sqlServerConnector.disconnect();
     }
 }
 ```
