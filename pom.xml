@@ -232,6 +232,18 @@
               <goals>
                 <goal>shade</goal>
               </goals>
+              <configuration>
+                <filters>
+                  <filter>
+                    <artifact>*:*</artifact>
+                    <excludes>
+                      <exclude>**/*Test.class</exclude>
+                      <exclude>**/*Tests.class</exclude>
+                      <exclude>**/test/**</exclude>
+                    </excludes>
+                  </filter>
+                </filters>
+              </configuration>
             </execution>
           </executions>
         </plugin>
