@@ -1,17 +1,16 @@
 package pe.edu.utp.DBHub.db;
 
 import pe.edu.utp.DBHub.config.DatabaseConnector;
+import pe.edu.utp.DBHub.config.DatabaseQuerys;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Implementation of the DatabaseConnector interface for MariaDB databases.
  * Provides methods to connect, disconnect, check connection status,
  * and handle error messages specific to MariaDB.
  */
-public class MariaDBConnector implements DatabaseConnector {
+public class MariaDBConnector implements DatabaseConnector, DatabaseQuerys {
     private Connection connection;
     private String errorMessage;
 
@@ -100,5 +99,121 @@ public class MariaDBConnector implements DatabaseConnector {
         }
         setErrorMessage("No MariaDB connection to close.");
         return false;
+    }
+    @Override
+    public ResultSet executeQuery(String name_table, String name_column, String condition) {
+        String sql = "SELECT * FROM "+name_table+" WHERE "+name_column +" = ?";
+        if (connection != null) {
+            try{
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, condition);
+                if(connection !=null){
+                    return ps.executeQuery();
+                }
+            }catch (SQLException e){
+                throw new RuntimeException(e.getMessage());
+            }
+        } else {
+            setErrorMessage("Database connection is null");
+            throw new IllegalStateException(getErrorMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public ResultSet executeQuery(String name_table, String name_column) {
+        String sql = "SELECT "+name_column+" FROM "+name_table;
+        if (connection != null) {
+            try{
+                PreparedStatement ps = connection.prepareStatement(sql);
+                if(connection !=null){
+                    return ps.executeQuery();
+                }
+            }catch (SQLException e){
+                throw new RuntimeException(e.getMessage());
+            }
+        } else {
+            setErrorMessage("Database connection is null");
+            throw new IllegalStateException(getErrorMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public ResultSet executeQuery(String name_table) {
+        String sql = "SELECT * FROM "+name_table;
+        if (connection != null) {
+            try{
+                PreparedStatement ps = connection.prepareStatement(sql);
+                if(connection !=null){
+                    return ps.executeQuery();
+                }
+            }catch (SQLException e){
+                throw new RuntimeException(e.getMessage());
+            }
+        } else {
+            setErrorMessage("Database connection is null");
+            throw new IllegalStateException(getErrorMessage());
+        }
+        return null;
+    }
+
+
+    @Override
+    public int executeUpdate(String name_table, String name_column, String value_insert,String column_condition, String condition) {
+        String sql = "UPDATE "+name_table+" SET "+name_column+" = ? where "+column_condition+" = ?";
+        if (connection != null) {
+            try{
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, value_insert);
+                ps.setString(2, condition);
+                if(connection !=null){
+                    return ps.executeUpdate();
+                }
+
+            }catch (SQLException e){
+                throw new RuntimeException(e.getMessage());
+            }
+        } else {
+            setErrorMessage("Database connection is null");
+            throw new IllegalStateException(getErrorMessage());
+        }
+        return 0;
+    }
+
+    @Override
+    public void executeProcedure(String name_procedure, Object[] parameter_list) {
+        StringBuilder sql = new StringBuilder("{call ").append(name_procedure).append("(");
+        for (int i = 0; i < parameter_list.length; i++) {
+            sql.append("?");
+            if(i <parameter_list.length-1){
+                sql.append(",");
+            }
+        }
+        sql.append(")}");
+        try{
+            CallableStatement callableStatement = connection.prepareCall(sql.toString());
+            if(connection !=null){
+                for(int i = 0; i<parameter_list.length; i++){
+                    if(parameter_list[i] instanceof String){
+                        callableStatement.setString(i+1, (String)parameter_list[i]);
+                    } else if (parameter_list[i] instanceof Integer) {
+                        callableStatement.setInt(i+1, (Integer)parameter_list[i]);
+                    } else if (parameter_list[i] instanceof Double) {
+                        callableStatement.setDouble(i+1, (Double)parameter_list[i]);
+                    }else if (parameter_list[i] instanceof Boolean) {
+                        callableStatement.setBoolean(i+1, (Boolean)parameter_list[i]);
+                    } else if (parameter_list[i] instanceof Date) {
+                        callableStatement.setDate(i+1, (Date)parameter_list[i]);
+                    }
+                }
+                callableStatement.execute();
+                System.out.println("Procedure executed successfully");
+
+            }
+        }catch (SQLException e){
+            setErrorMessage(e.getMessage());
+            throw new RuntimeException(getErrorMessage());
+        }
     }
 }
